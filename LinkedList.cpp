@@ -72,7 +72,7 @@ void LinkedList::insertPosition(int pos, int newNum) {
     }
 
     // if inserting between two nodes; i.e. [A, C] -> [A, B, C]
-    Node *prevNode = traverse(pos - 1);
+    Node *prevNode = traverse(pos - 2);
 
     // if inserting out of bounds
     if (prevNode == nullptr) {
@@ -80,19 +80,22 @@ void LinkedList::insertPosition(int pos, int newNum) {
 
         Node* currNode = head;
         int position = 0;
+
         while (currNode != nullptr && position < pos) {
         currNode = currNode->get_link();
         position++;
         }
+
+        cout << "Hello2" << endl;
 
         prevNode = traverse(position - 1);
         prevNode->set_link(newNode);
         return;
     }
 
-    Node* nextNode = traverse(pos);
+    Node* nextNode = traverse(pos - 1);
     // If it is in bound
-    Node *newNode  = new Node(newNum, nextNode->get_link());
+    Node *newNode  = new Node(newNum, nextNode);
 
     prevNode->set_link(newNode);
 }
@@ -102,24 +105,24 @@ bool LinkedList::deletePosition(int pos) {
         return false;
     }
 
-    Node* temp = traverse(pos);
+    Node* temp = traverse(pos - 1);
     if (temp == nullptr) {
         return false;
     }
 
-    Node* prevNode = traverse(pos - 1);
+    Node* prevNode = traverse(pos - 2);
     // prevNode->get_link() = traverse(pos + 1);
     // prevNode->link = traverse(pos + 1);
-    prevNode->set_link(traverse(pos + 1));
+    prevNode->set_link(traverse(pos));
 
     delete temp;
     return true;
 }
 
 int LinkedList::get(int pos) {
-    Node* currNode = traverse(pos);
+    Node* currNode = traverse(pos - 1);
     
-    if (currNode->get_link() == nullptr) {
+    if (currNode == nullptr) {
         return std::numeric_limits < int >::max();
     } else {
         return currNode->get_data();
