@@ -132,6 +132,11 @@ std::list<int> BigNumCalc::subCarry(std::list<int> num1In , std::list<int> num2I
 
     }
 
+    while (currentList.size() > 1 && currentList.front() == 0) {
+        currentList.pop_front();
+    }
+    
+
 
 
     return currentList;
